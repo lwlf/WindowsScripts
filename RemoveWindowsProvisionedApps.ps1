@@ -62,7 +62,6 @@ function Get-AppxDisplayName {
     
     $manifest = $Package | Get-AppxPackageManifest
     
-    # Filter out Sparse Packages
     if ($manifest.Package.Properties.AllowExternalContent -ne 'true') {
         $apps = $manifest.package.Applications.Application
 
@@ -131,7 +130,7 @@ $packagesName | Foreach-Object {
         $PackageFullName = $pkg.PackageFullName
         
         # $lstPackages.Items.Add([pscustomobject]@{'Label'=$Name;'Name'=$PackageFullName;'IsProvisioned'=$true})
-        $lstPackages.Items.Add([pscustomobject]@{'Label'=$Name;'Name'=$PackageFullName})
+        $lstPackages.Items.Add([pscustomobject]@{'Label'=$Name;'Name'=$pkg.Name;'PackageName'=$PackageFullName})
     } | Out-Null
 } | Out-Null
 
@@ -142,8 +141,16 @@ $DialogResult = $Form.ShowDialog()
 if ($DialogResult -eq $true) {
     $remove = $lstPackages.SelectedItems
     $remove | Foreach-Object {
-        Write-Host "Removing"$_.Label
-        Remove-AppPackage -AllUsers -Package $_.Name
-        Remove-AppxProvisionedPackage -Online -AllUsers -PackageName $_.Name
+        $LabelName = $_.Label
+        $Name = $_.Name
+        $PackageName = $_.PackageName
+
+        Write-Host "Removing $LabelName ($Name)"
+        Remove-AppPackage -AllUsers -Package $PackageName
     }
 }
+
+$DesktopPath=[Environment]::GetFolderPath("Desktop")
+$lstPackages.SelectedItems | Export-Csv -Path "$DesktopPath\RemovedList.csv" -NoTypeInformation -Append -Encoding "utf8"
+
+Write-Host "Removed list exproted to CSV file: `"$DesktopPath\RemovedList.csv`""
