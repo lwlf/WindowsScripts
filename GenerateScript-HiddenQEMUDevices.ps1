@@ -151,6 +151,11 @@ $batName = "HiddenQEMUDevices.bat"
 $batPath = "$env:USERPROFILE\Scripts"
 $batFullName = Join-Path -Path $batPath -ChildPath $batName
 
+if (-not (Test-Path -Path $batPath)) {
+    New-Item -ItemType Directory -Path $batPath | Out-Null
+    Write-Output "Create：$batPath"
+}
+
 Set-Content -Path $batFullName -Value $batContent -Encoding UTF8
 
 # 定义任务名称和路径
