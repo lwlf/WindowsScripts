@@ -158,4 +158,4 @@ $taskName = "Remove From Safely Remove Hardware List by Scripts"
 $taskPath = $batFullName
 
 # 创建计划任务
-schtasks /create /tn "$taskName" /sc ONSTART /ru SYSTEM /rl HIGHEST /tr "$taskPath"
+schtasks /create /tn "$taskName" /sc ONSTART /ru SYSTEM /rl HIGHEST /tr "$taskPath" /F
