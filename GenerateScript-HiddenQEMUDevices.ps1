@@ -271,13 +271,13 @@ goto :eof
 
 if (-not (Test-Path -Path $bat_path)) {
     # 创建脚本隐藏工作路径：%USERPROFILE%\Scripts
-    New-Item -ItemType Directory -Attributes Hidden -Path $bat_path | Out-Null
+    # 创建目录
+    New-Item -ItemType Directory -Path $bat_path -Force | Out-Null
     Write-Output "$($messages.create_hidden_folder)$bat_path"
 }
-elseif (-not ((Get-Item -Path $bat_path -Force).Attributes -match "Hidden")) {
-    # 存在工作路径且非隐藏，则隐藏工作路径
-    Set-ItemProperty -Path $bat_path -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
-}
+
+# 设置文件夹隐藏属性
+Set-ItemProperty -Path $bat_path -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
 
 Write-Output "$($messages.create_script)$bat_full_name"
 Set-Content -Path "$bat_full_name" -Value $bat_content -Encoding UTF8 -Force
