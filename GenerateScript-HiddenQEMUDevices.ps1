@@ -12,6 +12,7 @@ $lang_resources = @{
         create_hidden_folder = "Create a hidden folder: "
         create_script = "Create a script: "
         reboot = "Please reboot the system."
+        chcp_code = "437"
         }
 
     "zh-CN" = @{
@@ -21,6 +22,7 @@ $lang_resources = @{
         create_hidden_folder = "创建隐藏文件夹："
         create_script = "创建脚本："
         reboot = "请重启系统。"
+        chcp_code = "65001"
         }
 }
 
@@ -226,10 +228,14 @@ foreach ($device in $scsi_devices) {
 $pci_devices_string = Get-UniqueDevices($pci_devices_string)
 $scsi_devices_string = Get-UniqueDevices($scsi_devices_string)
 
+$chcp_code = $messages.chcp_code
+
 # 脚本内容
 $bat_content = @"
+
 @echo off
 setlocal enabledelayedexpansion
+chcp $chcp_code
 
 $pci_devices_string
 call :hiddenDevice "PCI"
@@ -280,7 +286,7 @@ if (-not (Test-Path -Path $bat_path)) {
 Set-ItemProperty -Path $bat_path -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
 
 Write-Output "$($messages.create_script)$bat_full_name"
-[System.IO.File]::WriteAllText("$bat_full_name", "$bat_content", [System.Text.Encoding]::Default)
+New-Item -Path "$bat_full_name" -ItemType File -Value "$bat_content" -Force | Out-Null
 
 # 定义任务名称和路径
 $task_name = "Remove From Safely Remove Hardware List by Scripts"
