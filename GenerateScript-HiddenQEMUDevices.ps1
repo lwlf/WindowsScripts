@@ -280,7 +280,10 @@ if (-not (Test-Path -Path $bat_path)) {
 Set-ItemProperty -Path $bat_path -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
 
 Write-Output "$($messages.create_script)$bat_full_name"
-Set-Content -Path "$bat_full_name" -Value $bat_content -Encoding UTF8 -Force
+# 获取 GB18030 编码对象
+$gb18030 = [System.Text.Encoding]::GetEncoding("GB18030")
+# 写入文件
+[System.IO.File]::WriteAllText("$bat_full_name", "$bat_content", $gb18030)
 
 # 定义任务名称和路径
 $task_name = "Remove From Safely Remove Hardware List by Scripts"
