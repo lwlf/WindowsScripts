@@ -6,24 +6,22 @@ enum DeviceType {
 
 $lang_resources = @{
     "en-US" = @{
-        is_not_admin = "Not currently running with admin privileges! Please run as an administrator."
-        is_admin = "√ Granted admin privileges."
-        press_enter_exit = "Press Enter to exit..."
+        is_not_admin         = "Not currently running with admin privileges! Please run as an administrator."
+        is_admin             = "√ Granted admin privileges."
+        press_enter_exit     = "Press Enter to exit..."
         create_hidden_folder = "Create a hidden folder: "
-        create_script = "Create a script: "
-        reboot = "Please reboot the system."
-        chcp_code = "437"
-        }
+        create_script        = "Create a script: "
+        reboot               = "Please reboot the system."
+    }
 
     "zh-CN" = @{
-        is_not_admin = "当前未以管理员权限运行！请以管理员身份运行。"
-        is_admin = "√ 已获得管理员权限"
-        press_enter_exit = "按 Enter 退出..."
+        is_not_admin         = "当前未以管理员权限运行！请以管理员身份运行。"
+        is_admin             = "√ 已获得管理员权限"
+        press_enter_exit     = "按 Enter 退出..."
         create_hidden_folder = "创建隐藏文件夹："
-        create_script = "创建脚本："
-        reboot = "请重启系统。"
-        chcp_code = "65001"
-        }
+        create_script        = "创建脚本："
+        reboot               = "请重启系统。"
+    }
 }
 
 $messages = $lang_resources[$PSUICulture]
@@ -228,14 +226,13 @@ foreach ($device in $scsi_devices) {
 $pci_devices_string = Get-UniqueDevices($pci_devices_string)
 $scsi_devices_string = Get-UniqueDevices($scsi_devices_string)
 
-$chcp_code = $messages.chcp_code
+$system_code_page = 65001
 
 # 脚本内容
 $bat_content = @"
-
 @echo off
 setlocal enabledelayedexpansion
-chcp $chcp_code
+chcp $system_code_page
 
 $pci_devices_string
 call :hiddenDevice "PCI"
@@ -286,7 +283,7 @@ if (-not (Test-Path -Path $bat_path)) {
 Set-ItemProperty -Path $bat_path -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
 
 Write-Output "$($messages.create_script)$bat_full_name"
-New-Item -Path "$bat_full_name" -ItemType File -Value "$bat_content" -Force | Out-Null
+[System.IO.File]::WriteAllText($bat_full_name, $bat_content, [System.Text.Encoding]::Default)
 
 # 定义任务名称和路径
 $task_name = "Remove From Safely Remove Hardware List by Scripts"
