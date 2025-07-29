@@ -226,7 +226,7 @@ foreach ($device in $scsi_devices) {
 $pci_devices_string = Get-UniqueDevices($pci_devices_string)
 $scsi_devices_string = Get-UniqueDevices($scsi_devices_string)
 
-$system_code_page = 65001
+$system_code_page = 936
 
 # 脚本内容
 $bat_content = @"
