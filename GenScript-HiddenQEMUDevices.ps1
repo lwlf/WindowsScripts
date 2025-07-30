@@ -110,7 +110,7 @@ $pci_devices = Get-Devices -type ([DeviceType]::PCI)
 # Get SCSI devices.
 $scsi_devices = Get-Devices -type ([DeviceType]::SCSI)
 
-# 保存脚本信息
+# Script info.
 $bat_name = "HiddenQEMUDevices.bat"
 $bat_path = "$env:USERPROFILE\Scripts"
 $bat_full_name = Join-Path -Path $bat_path -ChildPath $bat_name
