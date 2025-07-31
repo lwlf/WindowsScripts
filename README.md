@@ -16,15 +16,30 @@ irm https://ghfast.top/https://raw.githubusercontent.com/lwlf/WindowsScripts/mai
 
 ## 生成 隐藏QEMU设备 脚本
 
+### 单文件版本
+
 > ~~新增设备需要将 “Remove From Safely Remove Hardware List by Scripts” 计划禁用，重启电脑后执行，不然会找不到设备进行处理~~ 
+
 > 新增设备直接执行，脚本会读取旧设备，重启电脑后执行
 
 ```powershell
-irm https://gh-proxy.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HiddenQEMUDevices.ps1 | iex
+irm https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HiddenQEMUDevices.ps1 | iex
 ```
 
 或
 
 ```powershell
 irm https://gh-proxy.com/https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HiddenQEMUDevices.ps1 | iex
+```
+
+### 脚本、清单分离版本（推荐）
+
+```powershell
+irm https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HideQEMUDevices-ListSplit.ps1 | iex
+```
+
+或
+
+```powershell
+irm https://gh-proxy.com/https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HideQEMUDevices-ListSplit.ps1 | iex
 ```
