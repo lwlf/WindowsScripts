@@ -32,7 +32,7 @@ irm https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HiddenQ
 irm https://gh-proxy.com/https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HiddenQEMUDevices.ps1 | iex
 ```
 
-### 脚本、清单分离版本（推荐）
+### 脚本、清单分离版本
 
 ```powershell
 irm https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HideQEMUDevices-ListSplit.ps1 | iex
@@ -42,4 +42,16 @@ irm https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HideQEM
 
 ```powershell
 irm https://gh-proxy.com/https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/GenScript-HideQEMUDevices-ListSplit.ps1 | iex
+```
+
+### 脚本、清单分离并自动更新设备（推荐）
+
+```powershell
+irm https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/HideQEMUDevices.ps1 | iex
+```
+
+或
+
+```powershell
+irm https://gh-proxy.com/https://github.com/lwlf/WindowsScripts/raw/refs/heads/main/HideQEMUDevices.ps1 | iex
 ```
